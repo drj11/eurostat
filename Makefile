@@ -1,6 +1,6 @@
-pretty.svg: apro_acs_a.tsv.gz
+pretty.svg: apro_acs_a.tsv chart.py
 	python chart.py
 
-apro_acs_a.tsv.gz:
+apro_acs_a.tsv:
 	bin/fetch
 

@@ -1,5 +1,8 @@
 #!/bin/sh
 
+set -e
+
 File=apro_acs_a.tsv.gz
 
 curl -o "$File" "http://ec.europa.eu/eurostat/estat-navtree-portlet-prod/BulkDownloadListing?sort=1&downfile=data%2F$File"
+gunzip "$File"
