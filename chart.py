@@ -14,6 +14,7 @@ import svg.charts.plot
 
 data_file = 'apro_acs_a.tsv'
 
+# C1410 is Oats, Avena sativa
 def data(fn, RE=r'C1410,..,..'):
     with open(fn) as f:
         rows = csv.reader(f, delimiter='\t')
