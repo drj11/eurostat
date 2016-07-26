@@ -55,6 +55,7 @@ def main():
     print(points)
 
     g = svg.charts.plot.Plot(dict(
+      graph_title='Agricultural yield, EU countries',
       min_x_value=0,
       min_y_value=0,
       draw_lines_between_points=False,
@@ -62,6 +63,7 @@ def main():
       scale_y_divisions=10.0,
       show_data_points=True,
       show_data_values=False,
+      show_graph_title=True,
       show_x_guidelines=True,
       show_x_title=True,
       show_y_title=True,
