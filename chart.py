@@ -63,6 +63,10 @@ def main():
       show_data_points=True,
       show_data_values=False,
       show_x_guidelines=True,
+      show_x_title=True,
+      show_y_title=True,
+      x_title='Production Area, k hectares',
+      y_title='Yield, 100 kg / hectare',
       ))
     g.scale_x_divisions = 100.0
 
