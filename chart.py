@@ -52,7 +52,6 @@ def main():
     points = []
     for c in countries:
         points.extend([area[c], yi[c]])
-    print(points)
 
     g = svg.charts.plot.Plot(dict(
       graph_title='Agricultural yield, EU countries',
