@@ -70,6 +70,8 @@ def main():
       y_title='Yield, 100 kg / hectare',
       ))
     g.scale_x_divisions = 100.0
+    g.width = 800
+    g.height = 600
 
     g.add_data(dict(data=points, title='Avena'))
     with open('pretty.svg', 'wb') as f:
