@@ -42,7 +42,7 @@ def main():
         numbers = [float(x.group()) for x in numbers if x]
         v = median(numbers)
         if element == 'YI':
-            yi[country] = v
+            yi[country] = v / 10.0
         if element == 'AR':
             area[country] = v
 
@@ -59,7 +59,7 @@ def main():
       min_y_value=0,
       draw_lines_between_points=False,
       scale_x_integers=True,
-      scale_y_divisions=10.0,
+      scale_y_divisions=1.0,
       show_data_points=True,
       show_data_values=False,
       show_graph_title=True,
@@ -67,7 +67,7 @@ def main():
       show_x_title=True,
       show_y_title=True,
       x_title='Production Area, k hectares',
-      y_title='Yield, 100 kg / hectare',
+      y_title='Yield, tonne / hectare',
       ))
     g.scale_x_divisions = 100.0
     g.width = 800
