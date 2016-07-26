@@ -1,4 +1,8 @@
-#!/usr/bin/python3
+#!/usr/bin/python
+
+# Python 3 caution: this code works with Python 3,
+# but there is a bug in svg.charts.plot (with Python 3) that
+# makes it omit labels and circles.
 
 from __future__ import print_function
 
