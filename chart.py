@@ -34,13 +34,27 @@ def median(xs):
     return (ss[mf] + ss[mc]) * 0.5
 
 def main():
+    crop = ['C1410', 'Oats',
+      'C1110', 'Wheat',
+      'C1300', 'Barley',
+      'P1100', 'Field peas',
+      'R1000', 'Potatoes',
+      'R2000', 'Sugar beet',
+    ]
+
+    for code, cropname in zip(crop[0::2], crop[1::2]):
+        chart(code, cropname)
+
+def chart(code, cropname):
     yi = {}     # yield
     area = {}
-    for row in data(data_file):
+    for row in data(data_file, RE=code+',..,..'):
         crop, element, country = row[0].split(',')
         numbers = [re.match(r'[\d.]+', s) for s in row[1:]]
         numbers = [float(x.group()) for x in numbers if x]
         v = median(numbers)
+        if v is None:
+            continue
         if element == 'YI':
             yi[country] = v / 10.0
         if element == 'AR':
@@ -67,13 +81,18 @@ def main():
       x_title='Production Area, k hectares',
       y_title='Yield, tonne / hectare',
       ))
-    g.scale_x_divisions = 100.0
+    if max(points[0::2]) > 999:
+        g.scale_x_divisions = 1000.0
+    else:
+        g.scale_x_divisions = 100.0
     g.scale_y_divisions = 1.0
+    if max(points[1::2]) > 20:
+        g.scale_y_divisions = 10.0
     g.width = 800
     g.height = 600
 
-    g.add_data(dict(data=points, title='Avena'))
-    with open('pretty.svg', 'wb') as f:
+    g.add_data(dict(data=points, title=cropname))
+    with open('output/' + code + '.svg', 'wb') as f:
         f.write(g.burn())
 
 if __name__ == '__main__':
