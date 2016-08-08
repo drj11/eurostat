@@ -65,7 +65,7 @@ def chart(code, cropname):
 
     points = []
     for c in countries:
-        points.extend([area[c], yi[c]])
+        points.append((area[c], yi[c]))
 
     g = svg.charts.plot.Plot(dict(
       graph_title='Agricultural yield, EU countries',
@@ -81,12 +81,12 @@ def chart(code, cropname):
       x_title='Production Area, k hectares',
       y_title='Yield, tonne / hectare',
       ))
-    if max(points[0::2]) > 999:
+    if max(p[0] for p in points) > 999:
         g.scale_x_divisions = 1000.0
     else:
         g.scale_x_divisions = 100.0
     g.scale_y_divisions = 1.0
-    if max(points[1::2]) > 20:
+    if max(p[1] for p in points) > 20:
         g.scale_y_divisions = 10.0
     g.width = 800
     g.height = 600
