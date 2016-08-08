@@ -14,6 +14,10 @@ import svg.charts.plot
 
 data_file = 'apro_acs_a.tsv'
 
+from collections import namedtuple
+
+Datum = namedtuple("Datum", 'x y text')
+
 # C1410 is Oats, Avena sativa
 def data(fn, RE=r'C1410,..,..'):
     with open(fn) as f:
@@ -65,7 +69,7 @@ def chart(code, cropname):
 
     points = []
     for c in countries:
-        points.append((area[c], yi[c]))
+        points.append(Datum(area[c], yi[c], c))
 
     g = svg.charts.plot.Plot(dict(
       graph_title='Agricultural yield, EU countries',
@@ -73,7 +77,7 @@ def chart(code, cropname):
       min_y_value=0,
       draw_lines_between_points=False,
       show_data_points=True,
-      show_data_values=False,
+      show_data_values=True,
       show_graph_title=True,
       show_x_guidelines=True,
       show_x_title=True,
