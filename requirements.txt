@@ -1,1 +1,1 @@
-svg.charts
+svg.charts>=3.4
