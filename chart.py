@@ -72,7 +72,7 @@ def chart(code, cropname):
         points.append(Datum(area[c], yi[c], c))
 
     g = svg.charts.plot.Plot(dict(
-      graph_title='Agricultural yield, EU countries',
+      graph_title='Agricultural yield, Eurostat countries',
       min_x_value=0,
       min_y_value=0,
       draw_lines_between_points=False,
