@@ -52,6 +52,7 @@ def main():
 def chart(code, cropname):
     yi = {}     # yield
     area = {}
+    production = {}
     for row in data(data_file, RE=code+',..,..'):
         crop, element, country = row[0].split(',')
         numbers = [re.match(r'[\d.]+', s) for s in row[1:]]
@@ -61,15 +62,19 @@ def chart(code, cropname):
             continue
         if element == 'YI':
             yi[country] = v / 10.0
+        if element == 'PR':
+            production[country] = v
         if element == 'AR':
             area[country] = v
 
     # Countries reporting both yield and area.
     countries = set(yi.keys()) & set(area.keys())
 
-    points = []
+    areayield = []
+    areaproduction = []
     for c in countries:
-        points.append(Datum(area[c], yi[c], c))
+        areayield.append(Datum(area[c], yi[c], c))
+        areaproduction.append(Datum(area[c], production[c], c))
 
     g = svg.charts.plot.Plot(dict(
       graph_title='Agricultural yield, Eurostat countries',
@@ -85,19 +90,48 @@ def chart(code, cropname):
       x_title='Production Area, k hectares',
       y_title='Yield, tonne / hectare',
       ))
-    if max(p[0] for p in points) > 999:
+    if max(p[0] for p in areayield) > 999:
         g.scale_x_divisions = 1000.0
     else:
         g.scale_x_divisions = 100.0
     g.scale_y_divisions = 1.0
-    if max(p[1] for p in points) > 20:
+    if max(p[1] for p in areayield) > 20:
         g.scale_y_divisions = 10.0
     g.width = 800
     g.height = 600
 
-    g.add_data(dict(data=points, title=cropname))
+    g.add_data(dict(data=areayield, title=cropname))
     with open('output/' + code + '.svg', 'wb') as f:
         f.write(g.burn())
+
+    g = svg.charts.plot.Plot(dict(
+      graph_title='Production, Eurostat countries',
+      min_x_value=0,
+      min_y_value=0,
+      draw_lines_between_points=False,
+      show_data_points=True,
+      show_data_values=True,
+      show_graph_title=True,
+      show_x_guidelines=True,
+      show_x_title=True,
+      show_y_title=True,
+      x_title='Production area, k hectares',
+      y_title='Production, k tonnes',
+      ))
+    if max(p[0] for p in areaproduction) > 999:
+        g.scale_x_divisions = 1000.0
+    else:
+        g.scale_x_divisions = 100.0
+    g.scale_y_divisions = 100.0
+    if max(p[1] for p in areaproduction) > 2000:
+        g.scale_y_divisions = 1000.0
+    g.width = 800
+    g.height = 600
+
+    g.add_data(dict(data=areaproduction, title=cropname))
+    with open('output/' + code + '.production.svg', 'wb') as f:
+        f.write(g.burn())
+
 
 if __name__ == '__main__':
     main()
